@@ -1,0 +1,26 @@
+name: Run tests
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+  workflow_dispatch:
+
+jobs:
+
+  test_product_engine:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+        cache: 'pip'
+
+    - name: Test product_engine service
+      run: |
+        cd product_engine
+        pip install -r requirements.txt
+        pytest --cov=src tests
+
+# Add here job for testing new service
